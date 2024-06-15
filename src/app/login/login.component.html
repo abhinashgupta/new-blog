@@ -1,0 +1,28 @@
+<div class="form">
+  <h2>Login</h2>
+  <form (ngSubmit)="onLogin()" [formGroup]="getLoginData">
+    <input
+      type="text"
+      placeholder="email"
+      formControlName="email"
+      ngModel
+    /><br />
+    <span style="color: red;" *ngIf="useremail && useremail.invalid && useremail.touched"
+      >Email is required</span
+    ><br />
+    <input
+      type="text"
+      placeholder="password"
+      formControlName="password"
+      ngModel
+    /><br />
+    <span style="color: red;"
+      *ngIf="userpassword && userpassword.invalid && userpassword.touched"
+    >Password is Required</span>
+    <button [disabled]="getLoginData.invalid">Login</button>
+  </form>
+  <div *ngIf="succesMessage" class="succesMessage">
+    User LoggedIn Successfully!
+  </div>
+  <p>Not registerd ? <a routerLink="/register">Register</a></p>
+</div>

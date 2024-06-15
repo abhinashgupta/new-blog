@@ -1,0 +1,67 @@
+<div class="mainn">
+  <div class="blogs" *ngFor="let blog of blogs; let i = index">
+  <div *ngIf="blog; else noBlogs">
+    <div class="list">
+      <h3>{{ blog.title }}</h3>
+      <p>{{ blog.description }}</p>
+    </div>
+    <button class="buttons" (click)="editBlog(i)">Edit</button>&nbsp;
+    <button class="buttons"  (click)="deleteBlog(i)">Delete</button>
+
+    <div class="comments">
+      <h4>Comments:</h4>
+    <ul>
+      <li *ngFor="let comment of blog.comments">
+        {{ comment.comment }}
+      </li>
+    </ul>
+    </div>
+
+    <div class="commentForm">
+      <form (ngSubmit)="onComment(i)" [formGroup]="commentForm">
+      <input
+        type="text"
+        placeholder="Add a comment"
+        formControlName="comment"
+      />
+      <span style="color: red;" *ngIf="comment && comment.invalid && comment.touched"
+        >Comment is required</span
+      >&nbsp;
+      <button class="buttons"  type="submit" [disabled]="commentForm.invalid">
+        Add Comment
+      </button>
+    </form>
+    </div>
+  </div>
+  <ng-template #noBlogs>No Blogs Available</ng-template><br><hr>
+</div>
+
+<div class="form">
+  <h2>{{ isEditing ? "Edit Blog" : "Create Blog" }}</h2>
+
+<form (ngSubmit)="createBlog()" [formGroup]="blogData">
+  <input type="text" placeholder="Title" formControlName="title" /><br />
+  <span style="color: red;" *ngIf="blogtitle && blogtitle.invalid && blogtitle.touched"
+    >Title is Required</span
+  ><br />
+  <input
+    type="text"
+    placeholder="Description"
+    formControlName="description"
+  /><br />
+  <span style="color: red;"
+    *ngIf="
+      blogdescription && blogdescription.invalid && blogdescription.touched
+    "
+    >Description is Required</span
+  ><br />
+  <button type="submit" [disabled]="blogData.invalid">
+    {{ isEditing ? "Update Blog" : "Create Blog" }}
+  </button>
+  <div *ngIf="blogSuccesMessage" class="blogSuccesMessage">
+    New Blog Created Successfully!
+  </div>
+</form>
+</div>
+
+</div>
